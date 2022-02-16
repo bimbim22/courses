@@ -30,9 +30,7 @@
 
     - [ ] True
     - [x] False
-```
-    Note: Adding this data to the training set will change the training set distribution. However, it is not a problem to have different training and dev distribution. On the contrary, it would be very problematic to have different dev and test set distributions.
-```
+
 6. One member of the City Council knows a little about machine learning, and thinks you should add the 1,000,000 citizens’ data images to the test set. You object because:
 
     - The test set no longer reflects the distribution of data (security cameras) you most care about.
