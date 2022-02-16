@@ -66,7 +66,7 @@
     The results from this analysis implies that the team’s highest priority should be to bring more foggy pictures into the training set so as to address the 8.0% of errors in that category. True/False?
 
     - [x] False because it depends on how easy it is to add foggy data. If foggy data is very hard and costly to collect, it might not be worth the team’s effort. (OR)
-        - [x] False because this would depend on how easy it is to add this data and how much you think your team thinks it’ll help.
+
     - [ ] True because it is the largest category of errors. As discussed in lecture, we should prioritize the largest category of error to avoid wasting the team’s time.
     - [ ] True because it is greater than the other error categories added together (8.0 > 4.1+2.2+1.0).
     - [ ] False because data augmentation (synthesizing foggy images by clean/non-foggy images) is more efficient.
