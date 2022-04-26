@@ -1,0 +1,78 @@
+---
+title: "Statistical inference with the GSS data"
+output: 
+  html_document: 
+    fig_height: 4
+    highlight: pygments
+    theme: spacelab
+---
+
+## Setup
+
+### Load packages
+
+```{r load-packages, message = FALSE}
+library(ggplot2)
+library(dplyr)
+library(statsr)
+```
+
+### Load data
+
+```{r load-data}
+load("gss.Rdata")
+```
+
+* * *
+
+## Part 1: Data
+
+The data is collected through face-to-face interviews done by NORC at the University of Chicago.
+
+We can only generalize to the population of interest. We cannot make causality study because this is an observational study that can only establish correlation/association among variables.
+
+* * *
+
+## Part 2: Research question
+
+Is there a relationship between educational level and income status of the respondents?
+I have had this question for years and I think many would be curious too. However, please note that the actual income might affected by other factors for example gender, age, experience, etc. But at least, we will know how strong the relationship is.
+
+* * *
+
+## Part 3: Exploratory data analysis
+
+```{r}
+year_and_degree <- gss %>% select(year, degree)
+year_and_income <- gss %>% select(year, incom16)
+year_and_degree_prop <- as.data.frame(prop.table(table(year_and_degree), 1))
+year_and_income_prop <- as.data.frame(prop.table(table(year_and_income), 1))
+
+ggplot() + geom_bar(aes(y = year, x = Freq, fill = degree), data = year_and_degree_prop, stat = 'identity')
+ggplot() + geom_bar(mapping = aes(y = year, x = Freq, fill = incom16), data = year_and_income_prop, stat = 'identity')
+
+my_table <- gss %>% select(degree, incom16)
+
+```
+Overall, over the past 40 years from 1972 to 2012, the number of people graduated had gradually increased. The income status, however, seems to remain unchanged.
+* * *
+
+## Part 4: Inference
+
+Conditions checking:
+
+1. We can assume that the interviewees' answers are independent of each other.
+2. This is a sampling without replacement and 57061 observations are absolutely less than 10% of the population.
+3. Each case only contributes to 1 cell in the table.
+4. There are some scenarios whose expected cases are less than 5 so we would use a chi-square test with simulation.
+
+State hypotheses:
+
+H0: Type of degree and income status are independent.
+HA: Type of degree and income status are associated.
+
+```{r}
+chisq.test(x = my_table$degree, y = my_table$incom16, simulate = TRUE)
+```
+
+The test results in 0.0005 as p-value which is less than the significance level so we can reject the null hypothesis.
